@@ -1,10 +1,13 @@
+import { GroupListEntity } from './groupList.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { GroupUserEntity } from './groupUser.entity';
 
 @Entity({ name: 'USER' })
 export class UserEntity {
@@ -74,5 +77,9 @@ export class UserEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  //   @OneToMany()
+  @OneToMany(() => GroupListEntity, (groupList) => groupList.user)
+  groupLists: Promise<GroupListEntity[]>;
+
+  @OneToMany(() => GroupUserEntity, (groupUser) => groupUser.user)
+  groupUsers: Promise<GroupUserEntity[]>;
 }

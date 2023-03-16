@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, ManyToOne, UpdateDateColumn } from 'typeorm';
 import { Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { GroupListEntity } from './groupList.entity';
 
 @Entity({ name: 'COLOR' })
 export class ColorEntity {
@@ -20,4 +21,9 @@ export class ColorEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column({ type: 'int', nullable: false })
+  groupListId: number;
+  @ManyToOne(() => GroupListEntity, (groupList) => groupList.colors)
+  groupList: GroupListEntity;
 }

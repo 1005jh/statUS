@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { GroupListEntity } from './groupList.entity';
+import { PostEntity } from './post.entity';
 
 @Entity({ name: 'POSTIMG' })
 export class PostImgEntity {
@@ -23,4 +26,14 @@ export class PostImgEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column({ type: 'int', nullable: false })
+  groupListId: number;
+  @ManyToOne(() => GroupListEntity, (groupList) => groupList.postImgs)
+  groupList: GroupListEntity;
+
+  @Column({ type: 'int', nullable: false })
+  postId: number;
+  @ManyToOne(() => PostEntity, (post) => post.postimgs)
+  post: PostEntity;
 }

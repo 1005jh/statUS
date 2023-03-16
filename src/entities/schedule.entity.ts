@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { GroupListEntity } from './groupList.entity';
+import { GroupUserEntity } from './groupUser.entity';
 
 @Entity({ name: 'SCHEDULE' })
 export class ScheduleEntity {
@@ -51,4 +54,14 @@ export class ScheduleEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column({ type: 'int', nullable: false })
+  groupListId: number;
+  @ManyToOne(() => GroupListEntity, (groupList) => groupList.schedules)
+  groupList: GroupListEntity;
+
+  @Column({ type: 'int', nullable: false })
+  groupUserId: number;
+  @ManyToOne(() => GroupUserEntity, (groupUser) => groupUser.schedules)
+  groupUser: GroupUserEntity;
 }
